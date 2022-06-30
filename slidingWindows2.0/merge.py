@@ -132,3 +132,4 @@ if __name__ == '__main__':
                 kaks.append(data[i])
     print(kaks)
     # drawKaKs(speciesNameList, xAxisLen, kaks)
+    print('test')
