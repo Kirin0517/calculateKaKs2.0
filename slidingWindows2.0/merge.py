@@ -87,19 +87,23 @@ def mergeFile(size, step):
 
 
 def drawKaKs(speciesList, xAxisDate, yKaksDates):
-    # print(speciesList, xAxisDate, yKaksDate)
+    # print(speciesList, xAxisDate, yKaksDates)
+
+    # print(len(speciesList), speciesList)
+    print(yKaksDates)
     plt.figure(figsize=(6, 4))  # 创建绘图对象
 
     # 是否显示背景网格
     matplotlib.rc('axes', grid=False)
 
+    # x轴数据赋值
     x = []
+    number = 1
     for i in range(0, xAxisDate):
          x.append(i)
-    print(x)
-    print(yKaksDates)
-    # x = [0, 1, 2, 3, 4, 5, 6]
-    # y = [0.3, 0.4, 2, 5, 3, 4.5, 4]
+    # print(x)
+    # print(yKaksDates)
+
     yKaks = []
     for i in range(0, len(yKaksDates)):
 
@@ -109,8 +113,11 @@ def drawKaKs(speciesList, xAxisDate, yKaksDates):
         else:
             yKaks.append(float(yKaksDates[i]))
         if (i + 1) % len(x) == 0:
-            print(yKaks)
-            plt.plot(x, yKaks , linewidth=0.3)  # 在当前绘图对象绘图（X轴，Y轴，蓝色虚线，线宽度）
+            print('第'+str(number) + '次画图： ', yKaks)
+            plt.plot(x, yKaks, linewidth=0.3)  # 在当前绘图对象绘图（X轴，Y轴，蓝色虚线，线宽度）
+            plt.legend(speciesList[number])
+            print(speciesList[number])
+            number = number + 1
             yKaks =[]
 
     plt.xlabel("sliding window (staring codon)")  # X轴标签
@@ -125,8 +132,12 @@ def drawKaKs(speciesList, xAxisDate, yKaksDates):
 if __name__ == '__main__':
 
     # 设置滑窗大小
-    windowSize = input('设置滑窗大小：')
-    slidingStep = input('设置滑动步长：')
+    windowSize = input('Enter the slider size (requires a multiple of the window size to 3)：')
+    while int(windowSize) % 3 != 0:
+        print('Enter the data is not a multiple of 3, please re-enter!')
+        windowSize = input('Enter the slider size (requires a multiple of the window size to 3)：')
+
+    slidingStep = input('Sets the sliding window step size：')
     # param = mergeFile(windowSize)
 
     param = mergeFile(windowSize, slidingStep)
@@ -146,5 +157,4 @@ if __name__ == '__main__':
             if (i - 4) % 22 == 0:
                 kaks.append(data[i])
     print(kaks)
-    # drawKaKs(speciesNameList, xAxisLen, kaks)
-    print('test')
+    drawKaKs(speciesNameList, xAxisLen, kaks)
