@@ -5,7 +5,7 @@ from  matplotlib import pyplot as plt
 from matplotlib.ticker import MultipleLocator
 
 
-def mergeFile(size):
+def mergeFile(size, step):
 
     # 物种名数组，用于后面作图用
     namelist = []
@@ -21,13 +21,16 @@ def mergeFile(size):
         gene = data[1]
         # print(gene)
 
-    # 滑窗移动次数
-    geneLen = len(gene)-int(size)
-
-    # 对原基因进行切割
+    # 滑窗需要移动的长度
+    geneLen = len(gene)-int(size)+int(step)
+    # print(geneLen)
+    # 对原基因进行切割,并保存在listWindowOrigin里
     listWindowOrigin = []
-    for i in range(0, geneLen):
+
+    for i in range(0, geneLen, int(step)):
         listWindowOrigin.append(gene[i:i+int(size)])
+        # print(i)
+
     # print(listWindowOrigin)
     # print(len(listWindowOrigin))
 
@@ -43,6 +46,10 @@ def mergeFile(size):
 
         # 对读取的内容进行拼接
         for line in data:
+
+            # 计数器
+            flag = 0
+
             # 物种名称拼接部分
             if i % 2 == 0:
                 names = name.replace('\n', '') + '-' + data[i][1:]
@@ -54,15 +61,16 @@ def mergeFile(size):
                 # print(data[i])
                 # print(len(data[i]))
 
-                for j in range(0, geneLen):
+                for j in range(0, geneLen, int(step)):
                     # print(j)
                     listWindowContrast.append(data[i][j:j + int(size)])
-
+                    # print(listWindowContrast)
                     # 拼接名字
                     txt = txt + names
                     # print(names)
                     # 原基因和需要对比基因进行拼接
-                    genes = listWindowOrigin[j] + '\n' + listWindowContrast[j]
+                    genes = listWindowOrigin[flag] + '\n' + listWindowContrast[flag]
+                    flag = flag + 1
                     # print(genes)
                     txt = txt + genes + '\n\n'
                 # print(j)
@@ -75,6 +83,8 @@ def mergeFile(size):
         f.close()
     # print(txt)
     return geneLen, namelist
+
+
 
 def drawKaKs(speciesList, xAxisDate, yKaksDates):
     # print(speciesList, xAxisDate, yKaksDate)
@@ -116,11 +126,16 @@ if __name__ == '__main__':
 
     # 设置滑窗大小
     windowSize = input('设置滑窗大小：')
-    param = mergeFile(windowSize)
+    slidingStep = input('设置滑动步长：')
+    # param = mergeFile(windowSize)
 
+    param = mergeFile(windowSize, slidingStep)
+    # param = mergeFile(12, 3)
+    # 每个物种对比次数
     xAxisLen = param[0]
+    # print(xAxisLen)
+    # 保存物种名称
     speciesNameList = param[1]
-    # print(data)
     os.system('.\KaKs.exe -i result.axt -o txt.kaks -c 5 -m NG')
     kaks =[]
     with open('txt.kaks', 'r') as f:
