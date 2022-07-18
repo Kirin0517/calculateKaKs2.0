@@ -1,0 +1,11 @@
+2 sequences were aligned in batches with MAFFT (Katoh and Standley, 2013) using ' --auto' strategy and normal alignment mode.
+
+If you use PhyloSuite, please cite:
+Zhang, D., F. Gao, I. Jakovlić, H. Zou, J. Zhang, W.X. Li, and G.T. Wang, PhyloSuite: An integrated and scalable desktop platform for streamlined molecular sequence data management and evolutionary phylogenetics studies. Molecular Ecology Resources, 2020. 20(1): p. 348–355. DOI: 10.1111/1755-0998.13096.
+If you use MAFFT, please cite:
+Katoh, K., Standley, D.M., 2013. MAFFT multiple sequence alignment software version 7: improvements in performance and usability. Mol. Biol. Evol. 30, 772-780.
+
+Start at: 2022-07-16 16:31:25.739872
+Finish at: 2022-07-16 16:31:38.284768
+Total time used: 0:00:12.544896
+
